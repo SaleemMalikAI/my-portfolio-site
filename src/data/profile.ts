@@ -10,7 +10,7 @@ export const profile = {
   whatsapp: "https://wa.me/923239954754",
   github: "https://github.com/SaleemMalikAI",
   linkedin: "https://www.linkedin.com/in/devsaleemalik",
-  resume: "/Saleem_Malik_Resume.pdf",
+  resume: "/Saleem_Malik_AI_Full_Stack_Engineer.pdf",
   photo: "/saleem-malik.jpg",
   headline: "I build production web apps and the AI APIs behind them.",
   // Lines typed out in the hero terminal
@@ -121,18 +121,22 @@ export const experience: Experience[] = [
 ];
 
 export type Project = {
+  slug: string;
   name: string;
   kind: string;
   year: string;
   description: string;
   points: string[];
   tech: string[];
+  // Extra bullets shown only on the project's own page
+  details?: string[];
   // Add links when available, e.g. { label: "GitHub", href: "https://github.com/..." }
   links: { label: string; href: string }[];
 };
 
 export const projects: Project[] = [
   {
+    slug: "apifreaks-frontend",
     name: "APIFreaks Frontend",
     kind: "Production · JFreaks",
     year: "2025",
@@ -143,9 +147,16 @@ export const projects: Project[] = [
       "Core Web Vitals debugging and auth flow fixes",
     ],
     tech: ["Next.js", "TypeScript", "Tailwind CSS", "npm"],
+    details: [
+      "Built and maintain the website, developer tools and API documentation across multiple Next.js / TypeScript repositories.",
+      "Created a shared component and utility package, published to a private npm registry and reused across every frontend repository.",
+      "Fixed a critical authentication redirect loop affecting about 20 call sites.",
+      "Debugged Core Web Vitals (LCP, CLS, INP) issues."
+    ],
     links: [{ label: "Live", href: "https://apifreaks.com" }],
   },
   {
+    slug: "sign-connect",
     name: "Sign Connect",
     kind: "Final Year Project",
     year: "2025",
@@ -156,9 +167,13 @@ export const projects: Project[] = [
       "Speech processing and NLP pipeline end to end",
     ],
     tech: ["Python", "PyTorch", "Transformers"],
+    details: [
+      "Built as the final year project for the BS Computer Science degree at UET Lahore."
+    ],
     links: [],
   },
   {
+    slug: "multimodal-rag-chatbot",
     name: "Multimodal RAG Chatbot",
     kind: "PureLogics",
     year: "2024",
@@ -169,9 +184,13 @@ export const projects: Project[] = [
       "Gemini API for generation",
     ],
     tech: ["LangChain", "Gemini", "Pinecone", "Tavily"],
+    details: [
+      "Built during the AI Engineer internship at PureLogics."
+    ],
     links: [],
   },
   {
+    slug: "medical-qa-chatbot",
     name: "Medical QA Chatbot",
     kind: "Xavor",
     year: "2024",
@@ -182,9 +201,13 @@ export const projects: Project[] = [
       "Trained and evaluated in PyTorch",
     ],
     tech: ["LLaMA-3", "QLoRA", "PyTorch", "Python"],
+    details: [
+      "Built during the Gen-AI Engineer internship at Xavor Corporation, after studying Transformers, LLM training and LoRA / QLoRA fine-tuning."
+    ],
     links: [],
   },
   {
+    slug: "hr-review-automation",
     name: "HR Review Automation",
     kind: "PureLogics",
     year: "2024",
@@ -192,9 +215,13 @@ export const projects: Project[] = [
       "Multi-agent HR review system where agents run sequential tasks and pass their outputs to each other.",
     points: ["Agent roles and task hand-off with CrewAI"],
     tech: ["CrewAI", "Python", "LLMs"],
+    details: [
+      "Built during the AI Engineer internship at PureLogics."
+    ],
     links: [],
   },
   {
+    slug: "professional-services-platform",
     name: "Professional Services Platform",
     kind: "Full Stack Web App",
     year: "2023",
@@ -205,6 +232,9 @@ export const projects: Project[] = [
       "Two-way review system",
     ],
     tech: ["React", "Node.js"],
+    details: [
+      "Started during the MERN Stack internship at Infotech: buyers place orders on providers' gigs."
+    ],
     links: [],
   },
 ];
@@ -269,4 +299,12 @@ export const certifications = [
   { name: "Python (Basic, Intermediate)", issuer: "HackerRank" },
   { name: "Introduction to Generative AI", issuer: "Google Cloud" },
   { name: "React Basic", issuer: "Great Learning" },
+];
+
+// Starter questions shown in the "Ask my AI" chat
+export const assistantQuestions = [
+  "What does Saleem do at JFreaks?",
+  "What AI / LLM experience does he have?",
+  "Tell me about his final year project",
+  "How can I contact him?",
 ];

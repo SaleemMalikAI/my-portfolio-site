@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { ChatWidget } from "@/components/chat-widget";
 import { profile } from "@/data/profile";
 import "./globals.css";
 
@@ -40,6 +43,8 @@ export const metadata: Metadata = {
     siteName: profile.name,
   },
   twitter: { card: "summary_large_image", title, description },
+  // Set NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION in Vercel to verify the site in Google Search Console
+  verification: { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION },
 };
 
 // Runs before paint: saved choice, otherwise the system setting. Avoids a flash of the wrong theme.
@@ -55,7 +60,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body className="min-h-full flex flex-col font-sans">{children}</body>
+      <body className="min-h-full flex flex-col font-sans">
+        {children}
+        {/* Turn on once AI Gateway is set up on Vercel (see README) */}
+        {process.env.NEXT_PUBLIC_ASSISTANT_ENABLED === "true" && <ChatWidget />}
+        <Analytics />
+        <SpeedInsights />
+      </body>
     </html>
   );
 }

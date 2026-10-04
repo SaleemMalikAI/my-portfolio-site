@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import {
   certifications,
   education,
@@ -21,10 +22,10 @@ import { ThemeToggle } from "./theme-toggle";
 import { TypingPrompt } from "./typing-prompt";
 
 const navLinks = [
-  { href: "#experience", label: "experience" },
-  { href: "#projects", label: "projects" },
-  { href: "#stack", label: "stack" },
-  { href: "#contact", label: "contact" },
+  { href: "/#experience", label: "experience" },
+  { href: "/#projects", label: "projects" },
+  { href: "/#stack", label: "stack" },
+  { href: "/#contact", label: "contact" },
 ];
 
 function SectionHeading({ index, title, kicker }: { index: string; title: string; kicker: string }) {
@@ -50,21 +51,21 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-30 border-b border-line/80 bg-bg/70 backdrop-blur-xl">
       <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
-        <a href="#top" className="flex items-center gap-2 font-mono text-sm font-semibold">
+        <Link href="/#top" className="flex items-center gap-2 font-mono text-sm font-semibold">
           <span className="grid size-7 place-items-center rounded-md bg-gradient-to-br from-cyan to-violet text-[11px] font-bold text-white">
             SM
           </span>
           <span className="hidden sm:inline">
             saleem<span className="text-cyan">.</span>ai
           </span>
-        </a>
+        </Link>
         <div className="flex items-center gap-3 sm:gap-5">
           <ul className="hidden gap-6 font-mono text-xs text-muted md:flex">
             {navLinks.map((link) => (
               <li key={link.href}>
-                <a href={link.href} className="transition-colors hover:text-cyan">
+                <Link href={link.href} className="transition-colors hover:text-cyan">
                   ./{link.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
@@ -272,12 +273,17 @@ export function ProjectsSection() {
       <SectionHeading index="02" kicker="projects.run()" title="Selected projects" />
       <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {projects.map((project) => (
-          <li key={project.name} className="glow-card flex flex-col p-6">
+          <li key={project.name} className="glow-card relative flex flex-col p-6">
             <div className="flex items-center justify-between gap-4 font-mono text-[11px]">
               <span className="text-cyan">{project.kind}</span>
               <span className="text-muted">{project.year}</span>
             </div>
-            <h3 className="mt-4 text-xl font-semibold tracking-tight">{project.name}</h3>
+            <h3 className="mt-4 text-xl font-semibold tracking-tight">
+              {/* The ::after overlay makes the whole card clickable */}
+              <Link href={`/projects/${project.slug}`} className="after:absolute after:inset-0 after:rounded-2xl">
+                {project.name}
+              </Link>
+            </h3>
             <p className="mt-2 text-[14.5px] leading-relaxed text-muted">{project.description}</p>
             <ul className="mt-4 space-y-1.5 text-sm text-muted">
               {project.points.map((point) => (
@@ -293,22 +299,23 @@ export function ProjectsSection() {
                   <Chip key={t}>{t}</Chip>
                 ))}
               </ul>
-              {project.links.length > 0 && (
-                <div className="mt-4 flex gap-4">
+              <div className="mt-4 flex items-center gap-4">
+                <span className="inline-flex items-center gap-1 font-mono text-xs text-muted">
+                  details <ArrowIcon />
+                </span>
                   {project.links.map((link) => (
                     <a
                       key={link.href}
                       href={link.href}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center gap-1 font-mono text-xs text-cyan hover:underline"
+                      className="relative z-10 inline-flex items-center gap-1 font-mono text-xs text-cyan hover:underline"
                     >
                       {link.label}
                       <ArrowIcon />
                     </a>
                   ))}
-                </div>
-              )}
+              </div>
             </div>
           </li>
         ))}
