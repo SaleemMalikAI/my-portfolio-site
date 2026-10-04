@@ -17,6 +17,7 @@ import {
   PhoneIcon,
 } from "./icons";
 import { NeuralBackground } from "./neural-background";
+import { ThemeToggle } from "./theme-toggle";
 import { TypingPrompt } from "./typing-prompt";
 
 const navLinks = [
@@ -39,7 +40,7 @@ function SectionHeading({ index, title, kicker }: { index: string; title: string
 
 function Chip({ children }: { children: React.ReactNode }) {
   return (
-    <li className="rounded-md border border-line bg-white/[0.02] px-2.5 py-1 font-mono text-[11px] text-muted">
+    <li className="rounded-md border border-line bg-fg/[0.03] px-2.5 py-1 font-mono text-[11px] text-muted">
       {children}
     </li>
   );
@@ -50,14 +51,14 @@ export function Navbar() {
     <header className="sticky top-0 z-30 border-b border-line/80 bg-bg/70 backdrop-blur-xl">
       <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
         <a href="#top" className="flex items-center gap-2 font-mono text-sm font-semibold">
-          <span className="grid size-7 place-items-center rounded-md bg-gradient-to-br from-cyan to-violet text-[11px] font-bold text-bg">
+          <span className="grid size-7 place-items-center rounded-md bg-gradient-to-br from-cyan to-violet text-[11px] font-bold text-white">
             SM
           </span>
           <span className="hidden sm:inline">
             saleem<span className="text-cyan">.</span>ai
           </span>
         </a>
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-3 sm:gap-5">
           <ul className="hidden gap-6 font-mono text-xs text-muted md:flex">
             {navLinks.map((link) => (
               <li key={link.href}>
@@ -67,6 +68,7 @@ export function Navbar() {
               </li>
             ))}
           </ul>
+          <ThemeToggle />
           <a
             href={profile.resume}
             download
@@ -113,7 +115,7 @@ export function Hero() {
           <div className="mt-9 flex flex-wrap items-center gap-3">
             <a
               href="#contact"
-              className="rounded-lg bg-gradient-to-r from-cyan to-violet px-5 py-2.5 text-sm font-semibold text-bg shadow-[0_0_30px_-6px_var(--violet)] transition-transform hover:scale-[1.03]"
+              className="rounded-lg bg-gradient-to-r from-cyan to-violet px-5 py-2.5 text-sm font-semibold text-white shadow-[0_0_30px_-6px_var(--violet)] transition-transform hover:scale-[1.03]"
             >
               Get in touch
             </a>
@@ -149,7 +151,7 @@ export function Hero() {
         {/* Terminal card */}
         <div className="pointer-events-auto relative">
           <div className="absolute -inset-px rounded-2xl bg-gradient-to-br from-cyan/50 via-violet/40 to-pink/40 blur-sm" />
-          <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#080a12]/90 backdrop-blur-xl">
+          <div className="relative overflow-hidden rounded-2xl theme-dark border border-white/10 bg-[#080a12]/95 text-fg backdrop-blur-xl">
             <div className="flex items-center gap-2 border-b border-white/5 px-4 py-3">
               <span className="size-2.5 rounded-full bg-[#ff5f57]" />
               <span className="size-2.5 rounded-full bg-[#febc2e]" />
@@ -157,14 +159,14 @@ export function Hero() {
               <span className="ml-3 font-mono text-[11px] text-muted">saleem@ai — zsh</span>
             </div>
             <div className="flex items-center gap-4 border-b border-white/5 p-4">
-              <div className="relative size-16 shrink-0 overflow-hidden rounded-xl ring-1 ring-violet/40">
+              <div className="relative size-20 shrink-0 overflow-hidden rounded-xl ring-1 ring-violet/40">
                 <Image
                   src={profile.photo}
                   alt={`Portrait of ${profile.name}`}
                   fill
                   priority
-                  sizes="64px"
-                  className="object-cover object-top"
+                  sizes="80px"
+                  className="object-cover"
                 />
               </div>
               <div className="font-mono text-xs leading-relaxed">
@@ -396,7 +398,7 @@ export function ContactSection() {
     { icon: <MailIcon />, label: "email", value: profile.email, href: `mailto:${profile.email}` },
     { icon: <PhoneIcon />, label: "whatsapp", value: profile.phone, href: profile.whatsapp },
     { icon: <LinkedInIcon />, label: "linkedin", value: "in/devsaleemalik", href: profile.linkedin },
-    { icon: <GitHubIcon />, label: "github", value: "SaleemMalik632", href: profile.github },
+    { icon: <GitHubIcon />, label: "github", value: "SaleemMalikAI", href: profile.github },
   ];
 
   return (
@@ -422,7 +424,7 @@ export function ContactSection() {
                 rel="noreferrer"
                 className="glow-card flex items-center gap-4 px-4 py-3.5"
               >
-                <span className="grid size-10 shrink-0 place-items-center rounded-lg bg-white/[0.04] text-cyan">
+                <span className="grid size-10 shrink-0 place-items-center rounded-lg bg-fg/[0.05] text-cyan">
                   {item.icon}
                 </span>
                 <span className="min-w-0">
@@ -443,9 +445,6 @@ export function Footer() {
     <footer className="mx-auto w-full max-w-6xl px-4 pt-4 pb-10 sm:px-6">
       <div className="flex flex-col justify-between gap-2 border-t border-line pt-6 font-mono text-xs text-muted sm:flex-row">
         <p>© {new Date().getFullYear()} {profile.name}</p>
-        <p>
-          built with next.js <span className="text-cyan">·</span> deployed on vercel
-        </p>
       </div>
     </footer>
   );

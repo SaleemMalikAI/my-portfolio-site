@@ -8,7 +8,7 @@ export const profile = {
   email: "saleemalik444@gmail.com",
   phone: "+92 323 9954754",
   whatsapp: "https://wa.me/923239954754",
-  github: "https://github.com/SaleemMalik632",
+  github: "https://github.com/SaleemMalikAI",
   linkedin: "https://www.linkedin.com/in/devsaleemalik",
   resume: "/Saleem_Malik_Resume.pdf",
   photo: "/saleem-malik.jpg",

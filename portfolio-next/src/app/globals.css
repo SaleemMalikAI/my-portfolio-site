@@ -1,7 +1,26 @@
 @import "tailwindcss";
 
-/* Dark-only "AI" theme */
+/* Light by default; dark via data-theme (set before paint in layout.tsx) or the system setting */
 :root {
+  --bg: #f7f8fc;
+  --surface: #ffffff;
+  --fg: #0f1222;
+  --muted: #535a73;
+  --line: #e0e3ee;
+  --cyan: #0891b2;
+  --violet: #7c3aed;
+  --pink: #db2777;
+  --grid-dot: rgb(15 18 34 / 0.08);
+  --card-from: rgb(255 255 255 / 0.9);
+  --card-to: rgb(255 255 255 / 0.6);
+  --node-rgb: 60 66 100;
+  --link-rgb: 124 58 237;
+  --hover-rgb: 8 145 178;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
   --bg: #05060b;
   --surface: #0c0e17;
   --fg: #e7e9f2;
@@ -10,8 +29,39 @@
   --cyan: #22d3ee;
   --violet: #a78bfa;
   --pink: #f472b6;
+  --grid-dot: rgb(255 255 255 / 0.06);
+  --card-from: rgb(255 255 255 / 0.035);
+  --card-to: rgb(255 255 255 / 0.01);
+  /* Neural background: "r g b" triplets read by the canvas */
+  --node-rgb: 231 233 242;
+  --link-rgb: 167 139 250;
+  --hover-rgb: 34 211 238;
+  color-scheme: dark;
+  }
+}
+
+/* .theme-dark keeps the hero terminal dark in both modes */
+:root[data-theme="dark"],
+.theme-dark {
+  --bg: #05060b;
+  --surface: #0c0e17;
+  --fg: #e7e9f2;
+  --muted: #8a90a6;
+  --line: #1c2032;
+  --cyan: #22d3ee;
+  --violet: #a78bfa;
+  --pink: #f472b6;
+  --grid-dot: rgb(255 255 255 / 0.06);
+  --card-from: rgb(255 255 255 / 0.035);
+  --card-to: rgb(255 255 255 / 0.01);
+  /* Neural background: "r g b" triplets read by the canvas */
+  --node-rgb: 231 233 242;
+  --link-rgb: 167 139 250;
+  --hover-rgb: 34 211 238;
   color-scheme: dark;
 }
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 @theme inline {
   --color-bg: var(--bg);
@@ -34,11 +84,12 @@ html {
 body {
   background: var(--bg);
   color: var(--fg);
+  transition: background-color 0.3s, color 0.3s;
 }
 
 ::selection {
   background: var(--violet);
-  color: #05060b;
+  color: #fff;
 }
 
 :focus-visible {
@@ -49,7 +100,7 @@ body {
 
 /* Faint dot grid behind the whole page */
 .bg-grid {
-  background-image: radial-gradient(rgb(255 255 255 / 0.06) 1px, transparent 1px);
+  background-image: radial-gradient(var(--grid-dot) 1px, transparent 1px);
   background-size: 28px 28px;
   mask-image: linear-gradient(to bottom, black, transparent 90%);
 }
@@ -64,7 +115,7 @@ body {
 /* Card with a gradient border that lights up on hover */
 .glow-card {
   position: relative;
-  background: linear-gradient(180deg, rgb(255 255 255 / 0.035), rgb(255 255 255 / 0.01));
+  background: linear-gradient(180deg, var(--card-from), var(--card-to));
   border: 1px solid var(--line);
   border-radius: 1rem;
   transition: border-color 0.3s, transform 0.3s;

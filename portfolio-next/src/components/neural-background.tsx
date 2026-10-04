@@ -23,6 +23,14 @@ export function NeuralBackground() {
     let height = 0;
     let frame = 0;
     let visible = true;
+    // Colors come from CSS variables so the network follows the light/dark theme
+    const colors = { node: "", link: "", hover: "" };
+    const readColors = () => {
+      const style = getComputedStyle(canvas);
+      colors.node = style.getPropertyValue("--node-rgb").trim();
+      colors.link = style.getPropertyValue("--link-rgb").trim();
+      colors.hover = style.getPropertyValue("--hover-rgb").trim();
+    };
 
     const resize = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -58,7 +66,7 @@ export function NeuralBackground() {
           const b = nodes[j];
           const d = Math.hypot(a.x - b.x, a.y - b.y);
           if (d < LINK_DISTANCE) {
-            ctx.strokeStyle = `rgba(167,139,250,${(1 - d / LINK_DISTANCE) * 0.25})`;
+            ctx.strokeStyle = `rgb(${colors.link} / ${(1 - d / LINK_DISTANCE) * 0.3})`;
             ctx.lineWidth = 1;
             ctx.beginPath();
             ctx.moveTo(a.x, a.y);
@@ -68,13 +76,13 @@ export function NeuralBackground() {
         }
         const dm = Math.hypot(a.x - mouse.x, a.y - mouse.y);
         if (dm < MOUSE_RADIUS) {
-          ctx.strokeStyle = `rgba(34,211,238,${(1 - dm / MOUSE_RADIUS) * 0.6})`;
+          ctx.strokeStyle = `rgb(${colors.hover} / ${(1 - dm / MOUSE_RADIUS) * 0.6})`;
           ctx.beginPath();
           ctx.moveTo(a.x, a.y);
           ctx.lineTo(mouse.x, mouse.y);
           ctx.stroke();
         }
-        ctx.fillStyle = dm < MOUSE_RADIUS ? "rgba(34,211,238,0.95)" : "rgba(231,233,242,0.55)";
+        ctx.fillStyle = dm < MOUSE_RADIUS ? `rgb(${colors.hover} / 0.95)` : `rgb(${colors.node} / 0.55)`;
         ctx.beginPath();
         ctx.arc(a.x, a.y, dm < MOUSE_RADIUS ? 2.2 : 1.4, 0, Math.PI * 2);
         ctx.fill();
@@ -100,9 +108,20 @@ export function NeuralBackground() {
       if (visible) draw();
     });
 
+    // Re-read colors when the theme toggle or the system setting changes
+    const themeObserver = new MutationObserver(() => {
+      readColors();
+      if (reduceMotion) draw();
+    });
+    const scheme = window.matchMedia("(prefers-color-scheme: dark)");
+    const onScheme = () => readColors();
+
+    readColors();
     resize();
     draw();
     observer.observe(canvas);
+    themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+    scheme.addEventListener("change", onScheme);
     window.addEventListener("resize", resize);
     window.addEventListener("pointermove", onMove);
     document.addEventListener("pointerleave", onLeave);
@@ -110,6 +129,8 @@ export function NeuralBackground() {
     return () => {
       cancelAnimationFrame(frame);
       observer.disconnect();
+      themeObserver.disconnect();
+      scheme.removeEventListener("change", onScheme);
       window.removeEventListener("resize", resize);
       window.removeEventListener("pointermove", onMove);
       document.removeEventListener("pointerleave", onLeave);
