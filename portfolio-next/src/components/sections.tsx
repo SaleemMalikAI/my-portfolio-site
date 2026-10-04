@@ -159,17 +159,17 @@ export function Hero() {
               <span className="ml-3 font-mono text-[11px] text-muted">saleem@ai — zsh</span>
             </div>
             <div className="flex items-center gap-4 border-b border-white/5 p-4">
-              <div className="relative size-20 shrink-0 overflow-hidden rounded-xl ring-1 ring-violet/40">
+              <div className="relative size-16 shrink-0 overflow-hidden rounded-xl ring-1 ring-violet/40 sm:size-20">
                 <Image
                   src={profile.photo}
                   alt={`Portrait of ${profile.name}`}
                   fill
                   priority
-                  sizes="80px"
+                  sizes="(min-width: 640px) 80px, 64px"
                   className="object-cover"
                 />
               </div>
-              <div className="font-mono text-xs leading-relaxed">
+              <div className="min-w-0 font-mono text-[11px] leading-relaxed whitespace-nowrap sm:text-xs">
                 <p>
                   <span className="text-violet">const</span> engineer = {"{"}
                 </p>
@@ -403,33 +403,33 @@ export function ContactSection() {
 
   return (
     <section id="contact" className="mx-auto max-w-6xl px-4 py-24 sm:px-6">
-      <div className="relative isolate overflow-hidden rounded-3xl border border-line bg-surface p-8 sm:p-14">
+      <div className="relative isolate overflow-hidden rounded-2xl border border-line bg-surface p-5 sm:rounded-3xl sm:p-10 lg:p-14">
         <div aria-hidden="true" className="absolute inset-0 -z-10 bg-grid opacity-60" />
         <div aria-hidden="true" className="absolute -right-20 -bottom-24 -z-10 size-80 rounded-full bg-violet/25 blur-[100px]" />
         <p className="font-mono text-xs text-cyan">
           <span className="text-muted">{"//"} 05</span> contact.init()
         </p>
-        <h2 className="mt-4 max-w-2xl text-3xl font-semibold tracking-tight text-balance sm:text-5xl">
+        <h2 className="mt-4 max-w-2xl text-[1.75rem] leading-tight font-semibold tracking-tight text-balance sm:text-5xl">
           Let&apos;s build something <span className="text-gradient">intelligent</span>.
         </h2>
-        <p className="mt-5 max-w-xl text-muted">
+        <p className="mt-4 max-w-xl text-[15px] text-muted sm:mt-5 sm:text-base">
           Open to full stack and AI engineering roles. The fastest way to reach me is email.
         </p>
-        <ul className="mt-10 grid gap-3 sm:grid-cols-2">
+        <ul className="mt-8 grid gap-3 sm:mt-10 md:grid-cols-2">
           {items.map((item) => (
-            <li key={item.label}>
+            <li key={item.label} className="min-w-0">
               <a
                 href={item.href}
                 target={item.href.startsWith("mailto:") ? undefined : "_blank"}
                 rel="noreferrer"
-                className="glow-card flex items-center gap-4 px-4 py-3.5"
+                className="glow-card flex items-center gap-3 px-3 py-3 sm:gap-4 sm:px-4 sm:py-3.5"
               >
-                <span className="grid size-10 shrink-0 place-items-center rounded-lg bg-fg/[0.05] text-cyan">
+                <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-fg/[0.05] text-cyan sm:size-10">
                   {item.icon}
                 </span>
                 <span className="min-w-0">
                   <span className="block font-mono text-[11px] text-muted">{item.label}</span>
-                  <span className="block truncate text-sm font-medium">{item.value}</span>
+                  <span className="block text-[13px] font-medium [overflow-wrap:anywhere] min-[360px]:text-sm">{item.value}</span>
                 </span>
               </a>
             </li>
