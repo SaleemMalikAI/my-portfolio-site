@@ -18,6 +18,7 @@ import {
   PhoneIcon,
 } from "./icons";
 import { NeuralBackground } from "./neural-background";
+import { MobileMenu } from "./mobile-menu";
 import { ThemeToggle } from "./theme-toggle";
 import { TypingPrompt } from "./typing-prompt";
 
@@ -55,11 +56,12 @@ export function Navbar() {
           <span className="grid size-7 place-items-center rounded-md bg-gradient-to-br from-cyan to-violet text-[11px] font-bold text-white">
             SM
           </span>
-          <span className="hidden sm:inline">
-            saleem<span className="text-cyan">.</span>ai
+          <span className="flex flex-col leading-tight">
+            <span className="font-sans text-sm font-semibold tracking-tight">{profile.name}</span>
+            <span className="hidden text-[10px] font-normal text-muted sm:block">{profile.role.toLowerCase()}</span>
           </span>
         </Link>
-        <div className="flex items-center gap-3 sm:gap-5">
+        <div className="flex items-center gap-2 sm:gap-5">
           <ul className="hidden gap-6 font-mono text-xs text-muted md:flex">
             {navLinks.map((link) => (
               <li key={link.href}>
@@ -73,11 +75,13 @@ export function Navbar() {
           <a
             href={profile.resume}
             download
-            className="inline-flex items-center gap-2 rounded-lg border border-cyan/40 bg-cyan/10 px-3.5 py-2 font-mono text-xs font-medium text-cyan transition-colors hover:bg-cyan/20"
+            aria-label="Download resume (PDF)"
+            className="inline-flex h-9 items-center gap-2 rounded-lg border border-cyan/40 bg-cyan/10 px-3 font-mono text-xs font-medium text-cyan max-sm:w-9 max-sm:justify-center max-sm:px-0 sm:px-3.5 transition-colors hover:bg-cyan/20"
           >
             <DownloadIcon />
-            resume.pdf
+            <span className="hidden sm:inline">resume.pdf</span>
           </a>
+          <MobileMenu links={navLinks} />
         </div>
       </nav>
     </header>
