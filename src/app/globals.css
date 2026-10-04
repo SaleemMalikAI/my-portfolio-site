@@ -1,0 +1,185 @@
+@import "tailwindcss";
+
+/* Light by default; dark via data-theme (set before paint in layout.tsx) or the system setting */
+:root {
+  --bg: #f7f8fc;
+  --surface: #ffffff;
+  --fg: #0f1222;
+  --muted: #535a73;
+  --line: #e0e3ee;
+  --cyan: #0891b2;
+  --violet: #7c3aed;
+  --pink: #db2777;
+  --grid-dot: rgb(15 18 34 / 0.08);
+  --card-from: rgb(255 255 255 / 0.9);
+  --card-to: rgb(255 255 255 / 0.6);
+  --node-rgb: 60 66 100;
+  --link-rgb: 124 58 237;
+  --hover-rgb: 8 145 178;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+  --bg: #05060b;
+  --surface: #0c0e17;
+  --fg: #e7e9f2;
+  --muted: #8a90a6;
+  --line: #1c2032;
+  --cyan: #22d3ee;
+  --violet: #a78bfa;
+  --pink: #f472b6;
+  --grid-dot: rgb(255 255 255 / 0.06);
+  --card-from: rgb(255 255 255 / 0.035);
+  --card-to: rgb(255 255 255 / 0.01);
+  /* Neural background: "r g b" triplets read by the canvas */
+  --node-rgb: 231 233 242;
+  --link-rgb: 167 139 250;
+  --hover-rgb: 34 211 238;
+  color-scheme: dark;
+  }
+}
+
+/* .theme-dark keeps the hero terminal dark in both modes */
+:root[data-theme="dark"],
+.theme-dark {
+  --bg: #05060b;
+  --surface: #0c0e17;
+  --fg: #e7e9f2;
+  --muted: #8a90a6;
+  --line: #1c2032;
+  --cyan: #22d3ee;
+  --violet: #a78bfa;
+  --pink: #f472b6;
+  --grid-dot: rgb(255 255 255 / 0.06);
+  --card-from: rgb(255 255 255 / 0.035);
+  --card-to: rgb(255 255 255 / 0.01);
+  /* Neural background: "r g b" triplets read by the canvas */
+  --node-rgb: 231 233 242;
+  --link-rgb: 167 139 250;
+  --hover-rgb: 34 211 238;
+  color-scheme: dark;
+}
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-cyan: var(--cyan);
+  --color-violet: var(--violet);
+  --color-pink: var(--pink);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+::selection {
+  background: var(--violet);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Faint dot grid behind the whole page */
+.bg-grid {
+  background-image: radial-gradient(var(--grid-dot) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: linear-gradient(to bottom, black, transparent 90%);
+}
+
+.text-gradient {
+  background: linear-gradient(90deg, var(--cyan), var(--violet) 50%, var(--pink));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Card with a gradient border that lights up on hover */
+.glow-card {
+  position: relative;
+  background: linear-gradient(180deg, var(--card-from), var(--card-to));
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  transition: border-color 0.3s, transform 0.3s;
+}
+.glow-card::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, var(--cyan), var(--violet), var(--pink));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+.glow-card:hover {
+  transform: translateY(-2px);
+}
+.glow-card:hover::before {
+  opacity: 1;
+}
+
+.caret {
+  display: inline-block;
+  width: 0.55em;
+  height: 1.1em;
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  background: var(--cyan);
+  animation: blink 1s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(30px, -20px) scale(1.08);
+  }
+}
+
+.orb {
+  animation: float-slow 14s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .orb,
+  .caret {
+    animation: none;
+  }
+  .glow-card:hover {
+    transform: none;
+  }
+}
