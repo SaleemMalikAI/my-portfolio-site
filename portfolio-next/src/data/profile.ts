@@ -13,6 +13,14 @@ export const profile = {
   resume: "/Saleem_Malik_Resume.pdf",
   photo: "/saleem-malik.jpg",
   headline: "I build production web apps and the AI APIs behind them.",
+  // Lines typed out in the hero terminal
+  prompts: [
+    "build a RAG chatbot over PDFs → LangChain + Pinecone",
+    "ship speech-to-text API → FastAPI, async Python",
+    "fine-tune LLaMA-3 → QLoRA, PyTorch",
+    "orchestrate agents → CrewAI, MCP",
+    "frontend end to end → Next.js + TypeScript",
+  ],
   summary:
     "AI Full Stack Engineer with 2 years of experience. I build responsive frontends with React, Next.js, TypeScript and Tailwind CSS, and scalable backend services with FastAPI, Python and Node.js. I integrate LLMs into real products using RAG, LangChain, vector databases and multi-agent workflows, and ship features end to end, from UI to API to deployment.",
 };
@@ -62,6 +70,50 @@ export const experience: Experience[] = [
         points: [
           "Developed RAG-based NLP solutions with LangChain and LlamaIndex, optimizing vector search with Pinecone and ChromaDB.",
           "Built deep learning models (CNN, RNN, LSTM) with NumPy and implemented object detection with YOLO.",
+        ],
+      },
+      {
+        title: "Featured projects",
+        points: [
+          "Multimodal Chatbot with RAG: chatbot over PDF documents using LangChain, Gemini API and Pinecone, with Tavily web search as a fallback when retrieved context was insufficient.",
+          "HR Review Automation System: multi-agent HR review system with CrewAI, where agents run sequential tasks and pass outputs to each other.",
+        ],
+      },
+    ],
+  },
+  {
+    company: "Xavor Corporation",
+    role: "Gen-AI Engineer Intern",
+    location: "Hybrid",
+    period: "Jun 2024 – Aug 2024",
+    groups: [
+      {
+        title: "AI / NLP development",
+        points: [
+          "Learned NLP fundamentals: tokenization, text preprocessing and sequence modeling.",
+          "Studied the Transformer architecture and Large Language Models, including their training and optimization.",
+          "Implemented LoRA and QLoRA for efficient LLM fine-tuning.",
+        ],
+      },
+      {
+        title: "Featured project",
+        points: [
+          "Medical QA Chatbot: fine-tuned LLaMA-3 with QLoRA on the ngram/medchat-qa dataset to answer medical questions, using PyTorch.",
+        ],
+      },
+    ],
+  },
+  {
+    company: "Infotech",
+    role: "MERN Stack Developer Intern",
+    location: "Lahore · Onsite",
+    period: "2023 · 6 weeks",
+    groups: [
+      {
+        title: "Full stack development",
+        points: [
+          "Gained hands-on experience with React and Node.js and industry best practices.",
+          "Built a service provider web app with buyer and seller roles: orders on gigs, real-time chat and two-way reviews.",
         ],
       },
     ],
@@ -120,6 +172,19 @@ export const projects: Project[] = [
     links: [],
   },
   {
+    name: "Medical QA Chatbot",
+    kind: "Xavor",
+    year: "2024",
+    description:
+      "Medical question-answering chatbot built by fine-tuning LLaMA-3 on the ngram/medchat-qa dataset.",
+    points: [
+      "Parameter-efficient fine-tuning with QLoRA",
+      "Trained and evaluated in PyTorch",
+    ],
+    tech: ["LLaMA-3", "QLoRA", "PyTorch", "Python"],
+    links: [],
+  },
+  {
     name: "HR Review Automation",
     kind: "PureLogics",
     year: "2024",
@@ -159,21 +224,45 @@ export const skills: { group: string; items: string[] }[] = [
   { group: "Tools", items: ["Git", "Docker", "Vercel", "Postman", "npm (private registry)"] },
 ];
 
-export const education = {
-  school: "University of Engineering and Technology",
-  degree: "Bachelor of Computer Science",
-  location: "Lahore, Pakistan",
-  period: "Sep 2021 – Jun 2025",
-  courses: [
-    "Operating Systems",
-    "Data Structures",
-    "Analysis of Algorithms",
-    "Artificial Intelligence",
-    "Machine Learning",
-    "Networking",
-    "Databases",
-  ],
+export type Education = {
+  school: string;
+  degree: string;
+  location: string;
+  period: string;
+  note?: string;
+  courses: string[];
 };
+
+export const education: Education[] = [
+  {
+    school: "University of Engineering and Technology",
+    degree: "Bachelor of Computer Science",
+    location: "Lahore, Pakistan",
+    period: "Sep 2021 – Jun 2025",
+    courses: [
+      "Operating Systems",
+      "Data Structures",
+      "Analysis of Algorithms",
+      "Artificial Intelligence",
+      "Machine Learning",
+      "Networking",
+      "Databases",
+    ],
+  },
+  {
+    school: "Degree College Kahror Pacca",
+    degree: "FSc Pre-Engineering",
+    location: "Multan, Pakistan",
+    period: "Mar 2019 – May 2021",
+    note: "Score: 1073 / 1100",
+    courses: ["Chemistry", "Mathematics", "Physics", "English"],
+  },
+];
+
+export const languages = [
+  { name: "English", level: "Professional" },
+  { name: "Urdu", level: "Native" },
+];
 
 export const certifications = [
   { name: "SQL (Advanced)", issuer: "HackerRank" },

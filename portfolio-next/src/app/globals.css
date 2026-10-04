@@ -1,25 +1,16 @@
 @import "tailwindcss";
 
+/* Dark-only "AI" theme */
 :root {
-  --bg: #fafaf9;
-  --surface: #ffffff;
-  --fg: #18181b;
-  --muted: #5f5f68;
-  --line: #e4e4e7;
-  --accent: #6d4aff;
-  --accent-soft: #6d4aff14;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #0b0b0d;
-    --surface: #131317;
-    --fg: #ededef;
-    --muted: #9b9ba6;
-    --line: #26262c;
-    --accent: #9b85ff;
-    --accent-soft: #9b85ff1a;
-  }
+  --bg: #05060b;
+  --surface: #0c0e17;
+  --fg: #e7e9f2;
+  --muted: #8a90a6;
+  --line: #1c2032;
+  --cyan: #22d3ee;
+  --violet: #a78bfa;
+  --pink: #f472b6;
+  color-scheme: dark;
 }
 
 @theme inline {
@@ -28,8 +19,9 @@
   --color-fg: var(--fg);
   --color-muted: var(--muted);
   --color-line: var(--line);
-  --color-accent: var(--accent);
-  --color-accent-soft: var(--accent-soft);
+  --color-cyan: var(--cyan);
+  --color-violet: var(--violet);
+  --color-pink: var(--pink);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -45,18 +37,98 @@ body {
 }
 
 ::selection {
-  background: var(--accent);
-  color: #fff;
+  background: var(--violet);
+  color: #05060b;
 }
 
 :focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--cyan);
   outline-offset: 3px;
-  border-radius: 4px;
+  border-radius: 6px;
+}
+
+/* Faint dot grid behind the whole page */
+.bg-grid {
+  background-image: radial-gradient(rgb(255 255 255 / 0.06) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: linear-gradient(to bottom, black, transparent 90%);
+}
+
+.text-gradient {
+  background: linear-gradient(90deg, var(--cyan), var(--violet) 50%, var(--pink));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Card with a gradient border that lights up on hover */
+.glow-card {
+  position: relative;
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.035), rgb(255 255 255 / 0.01));
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  transition: border-color 0.3s, transform 0.3s;
+}
+.glow-card::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, var(--cyan), var(--violet), var(--pink));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+.glow-card:hover {
+  transform: translateY(-2px);
+}
+.glow-card:hover::before {
+  opacity: 1;
+}
+
+.caret {
+  display: inline-block;
+  width: 0.55em;
+  height: 1.1em;
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  background: var(--cyan);
+  animation: blink 1s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(30px, -20px) scale(1.08);
+  }
+}
+
+.orb {
+  animation: float-slow 14s ease-in-out infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+  .orb,
+  .caret {
+    animation: none;
+  }
+  .glow-card:hover {
+    transform: none;
   }
 }
