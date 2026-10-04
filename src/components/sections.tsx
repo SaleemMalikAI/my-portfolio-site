@@ -53,7 +53,7 @@ export function Navbar() {
     <header className="sticky top-0 z-30 border-b border-line/80 bg-bg/70 backdrop-blur-xl">
       <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
         <Link href="/#top" className="flex items-center gap-2 font-mono text-sm font-semibold">
-          <span className="grid size-7 place-items-center rounded-md bg-gradient-to-br from-cyan to-violet text-[11px] font-bold text-white">
+          <span className="grid size-7 place-items-center rounded-md bg-[linear-gradient(135deg,#22d3ee,#a78bfa_60%,#f472b6)] font-sans text-[11px] font-extrabold tracking-tight text-[#05060b]">
             SM
           </span>
           <span className="flex flex-col leading-tight">
